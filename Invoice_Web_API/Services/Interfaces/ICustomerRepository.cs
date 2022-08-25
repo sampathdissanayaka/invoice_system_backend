@@ -10,6 +10,7 @@ namespace Invoice_Web_API.Services.Interfaces
     public interface ICustomerRepository
     {
         JsonResult GetCustomers();
+        JsonResult GetCustomer(int id);
         JsonResult InsertCustomer(Customer customer);
         JsonResult UpdateCustomer(Customer customer);
         JsonResult DeleteCustomer(int id);

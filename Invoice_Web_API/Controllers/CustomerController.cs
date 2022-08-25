@@ -31,6 +31,18 @@ namespace Invoice_Web_API.Controllers
                 throw ex;
             }
         }
+        [HttpGet("{id}")]
+        public JsonResult GetCustomer(int id)
+        {
+            try
+            {
+                return _customerRepository.GetCustomer(id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         [HttpPost]
         public JsonResult InsertCustomers(Customer customer)

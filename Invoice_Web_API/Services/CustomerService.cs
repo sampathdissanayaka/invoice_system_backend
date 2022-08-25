@@ -42,6 +42,29 @@ namespace Invoice_Web_API.Services
             return new JsonResult("Deleted Successfully");
         }
 
+        public JsonResult GetCustomer(int id)
+        {
+            string query = @"select Id, CustomerName, TransactionDate, ProductId, ProductQualityId, Discount, TotalAmount from dbo.Customers where Id=@Id";
+
+            DataTable table = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("InvoiceAppCon");
+            SqlDataReader myReader;
+            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (SqlCommand myCommand = new SqlCommand(query, myCon))
+                {
+                    myCommand.Parameters.AddWithValue("@Id", id);
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader);
+                    myReader.Close();
+                    myCon.Close();
+                }
+            }
+
+            return new JsonResult(table);
+        }
+
         public JsonResult GetCustomers()
         {
             string query = @"select Id, CustomerName, TransactionDate, ProductId, ProductQualityId, Discount, TotalAmount from dbo.Customers";
